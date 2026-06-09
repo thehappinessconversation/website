@@ -132,39 +132,39 @@ async function loadDashboard() {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        entry.target.querySelectorAll('.circle-fill').forEach(circle => {
-                            const progress = circle.getAttribute('stroke-dasharray').split(',')[0];
-                            circle.style.strokeDasharray = `0, 100`;
-                            setTimeout(() => {
-                                circle.style.transition = 'stroke-dasharray 1s ease-out';
-                                circle.style.strokeDasharray = `${progress}, 100`;
-                            }, 100);
+                        // Find all rings inside this visible container and set their dasharray
+                        const rings = entry.target.querySelectorAll('.animate-ring');
+                        rings.forEach(ring => {
+                            const progress = ring.getAttribute('data-progress');
+                            ring.style.strokeDasharray = `${progress}, 100`;
                         });
+                        // Stop observing once animated so it doesn't stutter if they scroll up/down
                         observer.unobserve(entry.target);
                     }
                 });
-            }, { threshold: 0.3 });
+            }, { threshold: 0.5 }); // Trigger sooner (at 10% visibility) so it starts before they stop scrolling
 
             observer.observe(gridContainer);
-                const projectHTML = `
-                    <div class="project-card">
-                        <p class="project-name" style="color: ${project.color}">${project.name}</p>
-                        
-                        <div class="circular-progress-container">
-                            <svg class="circular-chart" viewBox="0 0 36 36">
-                                <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                <path class="circle-fill"
-                                    style="stroke: ${project.color}" 
-                                    stroke-dasharray="${project.progress}, 100"
-                                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                            </svg>
-                            <div class="percentage-text" style="color: ${project.color}">${project.progress}%</div>
-                        </div>
-                        
-                        <p class="project-update">${project.recentUpdate}</p>
+            // Inside your loadDashboard loop in script.js:
+            const projectHTML = `
+                <div class="project-card">
+                    <p class="project-name" style="color: ${project.color}">${project.name}</p>
+                    
+                    <div class="circular-progress-container">
+                        <svg class="circular-chart" viewBox="0 0 36 36">
+                            <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <path class="circle-fill animate-ring"
+                                style="stroke: ${project.color}; stroke-dasharray: 0, 100;" 
+                                data-progress="${project.progress}"
+                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        </svg>
+                        <div class="percentage-text" style="color: ${project.color}">${project.progress}%</div>
                     </div>
-                `;
-                gridContainer.insertAdjacentHTML('beforeend', projectHTML);
+                    
+                    <p class="project-update">${project.recentUpdate}</p>
+                </div>
+            `;
+            gridContainer.insertAdjacentHTML('beforeend', projectHTML);
             });
     } catch (error) {
         console.error("Error generating dashboard layout elements:", error);

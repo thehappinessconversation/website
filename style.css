@@ -423,9 +423,10 @@ h4 { /* The Ongoing Story Of */
 /* The Black fill */
 .circle-fill {
     fill: none;
-    stroke-width: 2.5;
+    stroke-width: 2.8;
     stroke-linecap: round;
-    animation: circleReveal 1s ease-out forwards;
+    /* This transition property makes the animation hardware-accelerated and smooth */
+    transition: stroke-dasharray 2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* The exact center percentage text */

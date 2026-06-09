@@ -1,0 +1,483 @@
+body{
+    margin: 0px;
+}
+main{
+    margin: 0px;
+}
+
+/* Navigation Bar */
+.navbar{
+    list-style-type: none;
+    background-color: #F9F8F7;
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+
+    /* ensures navbar stays on top of page at all times */
+    position: -webkit-sticky; /* Safari support */
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* Ensures it stays above other content */
+}
+.nav-left, .nav-right {
+    display: flex;
+}
+.navbar a{
+    color: #5f5e5a;
+    text-decoration: none;
+    padding: 15px;
+    display: block;
+    text-align: center;
+}
+.navbar a:hover{
+    background-color: #f1f0ef;
+}
+
+/* thehappinessconversation title */
+h3 { /* thehappinessconversation */ 
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 100px;
+    margin: 0px;
+}
+h4 { /* The Ongoing Story Of */ 
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 30px;
+    margin: 0px;
+    margin-top: 60px;
+}
+
+/* LINE */
+.timeline-container {
+    height: auto; /* CHANGE FOR HEIGHT OF LINE */ 
+    position: relative;
+    padding-top: 375px; /* Space for your big header */
+}
+/* The Background Line (The Path) */
+.scroll-line-track {
+    position: absolute;
+    left: 50%;
+    top: 100px;
+    bottom: 0;
+    width: 2px;
+    background-color: #ffffff;
+    bottom: -380px;
+}
+/* The Growing Line (The Fill) */
+.scroll-line-fill {
+    position: absolute;
+    width: 100%;
+    background-color: #000000;
+    height: 0%; /* start at 0 */
+}
+
+/* BLOCKS */
+/* Text */
+.timeline-text-title{
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 50px;
+    font-weight: bold;
+    margin: 0;        /* Removes all default space around the text */
+    padding: 0;       /* Removes any default padding */
+}
+.timeline-date {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 24px;
+    padding: 0;       /* Removes any default padding */
+    color: #5f5e5a;
+}
+.timeline-paragraph{
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 15px;
+    margin-top: 0;        /* Removes all default space around the text */
+    padding: 0;       /* Removes any default padding */
+    line-height: 1.5; /* Improves readability without adding "gap" space */
+    white-space: pre-wrap;
+}
+
+/* Text Box, Dot and Image Aesthetic */
+.timeline-text-right {
+    /* Positioning */
+    margin-left: calc(50% + 40px); /* Pushes it to the right of the 50% center line */
+    
+    /* The Border & Shape */
+    border: 1px solid #e1e1e1; /* Subtle light gray */
+    border-radius: 12px;       /* Smooth rounded corners */
+    padding: 20px 20px;        /* Space inside the box so text doesn't touch edges */
+    background-color: #ffffff; /* Or match your site background */
+    max-width: 500px;       /* Max text width */
+    
+    /* Drop shadow (optional, for that Notion look) */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.timeline-text-left {
+    /* Positioning */
+    position: absolute;
+    right: calc(50% + 40px);
+    
+    /* The Border & Shape */
+    border: 1px solid #e1e1e1; /* Subtle light gray */
+    border-radius: 12px;       /* Smooth rounded corners */
+    padding: 20px 20px;        /* Space inside the box so text doesn't touch edges */
+    background-color: #ffffff; /* Or match your site background */
+    max-width: 500px;       /* Max text width */
+    
+    /* Drop shadow (optional, for that Notion look) */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.timeline-dot {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-46%);
+    font-size: 30px;
+    z-index: 3;
+    background-color: white;
+    opacity: 0;
+}
+.timeline-dot.reveal {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+}
+.timeline-station {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 450px;
+}
+.timeline-picture-left {
+    position: absolute;
+    right: calc(50% + 40px);
+}
+.timeline-picture-right {
+    position: absolute;
+    margin-left: calc(50% + 40px);
+}
+.images {
+    border-radius: 12px; /* Adjust this number to make it more or less round */
+    overflow: hidden;    /* Ensures the image content clips to the curve */
+    border: 1px solid #e1e1e1;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    max-width: 400px; /* Set the maximum width it can take up on your timeline */
+    height: auto; /* This is the key: auto tells the browser to respect the original ratio */
+}
+
+/* Text Box, Dot and Image Animation */
+/* Initial hidden state */
+.reveal-box {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* When visible */
+.reveal-box.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal-dot {
+    opacity: 0;
+    transform: translateX(-46%) translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal-dot.active {
+    opacity: 1;
+    transform: translateX(-46%) translateY(0);
+}
+
+/* Pop-up Window Animation */
+.timeline-text-right, .timeline-text-left {
+    cursor: pointer;
+    transition: transform 0.4s ease; /* Makes the growth smooth */
+}
+.timeline-text-right:hover, .timeline-text-left:hover {
+    transform: scale(1.02) !important; /* Grows by 3% */
+    background-color: #fcfcfc;
+}
+/* The Modal Background */
+.modal-overlay {
+    display: none; /* KEY: Keeps it hidden by default */
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.6); /* Semi-transparent black */
+    z-index: 2000; /* Higher than your navbar */
+}
+/* The Page Box */
+.modal-content {
+    background: white;
+    margin: 5% auto;
+    width: 90%;          /* A bit wider for the banner look */
+    max-width: 1000px;   /* Or whatever looks right to you */
+    
+    border-radius: 8px;
+    position: relative; 
+    
+    /* Optional: Scrolling (We'll re-address this in step 2) */
+    max-height: 85vh; /* Adjust as needed for vertical screen space */
+    overflow-y: auto;
+}
+
+/* MOVE GRID HERE */
+#modal-body-text {
+    display: grid;
+    grid-template-columns: minmax(20px, 1fr) minmax(0, 700px) minmax(20px, 1fr);
+}
+
+/* The White Bar at the top */
+.modal-top-bar {
+    width: 100%;
+    height: 45px;    /* Height for the 'X' button area */
+    background: #F8F8F7;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+/* --- Place Banner in ALL 3 columns (full width) --- */
+.modal-banner {
+    grid-column: 1 / -1; /* Spans from the first line to the very last */
+    width: 100%;
+    z-index: 11;
+    
+    /* Set specific dimensions to crop perfectly like Notion */
+    height: 300px;      /* Adjust height as you see fit */
+    object-fit: cover;  /* Prevents image from stretching */
+    
+    /* Crop position (crops to the top half, similar to the reference) */
+    object-position: center 20%; 
+    display: block;
+}
+
+/* --- New container for text (Centers content) --- */
+.modal-body {
+    grid-column: 2;    /* Forces text into the middle 700px column */
+    padding: 40px 0 60px 0; 
+    display: flex;
+    flex-direction: column;
+    gap: 10px;         /* Adds small gaps between title, date, and story */
+}
+
+/* Box shadow around picture */
+.modal-banner-wrapper {
+    grid-column: 1 / -1;
+    box-shadow: 0 6px 10px -2px rgba(0, 0, 0, 0.25), 
+                0 -6px 10px -2px rgba(0, 0, 0, 0.25);
+    overflow: visible;
+}
+
+/* Exit Button */
+.close-button {
+    position: absolute; /* This lets us place the X anywhere inside the content box */
+    top: 15px;          /* 20px from the top edge */
+    left: 15px;        /* 20px from the right edge */
+    cursor: pointer;    /* Changes mouse to a hand icon */
+    z-index: 2001;     /* Ensures it sits above any inserted content */
+    width: 15px;
+    height: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/* The Styling of the Icon itself */
+.close-button i {
+    position: absolute;
+    font-size: 15px;
+    color: #ff5f57;
+    transition: opacity 0.2s ease;
+}
+/* Changing color of any links */
+.timeline-paragraph a {
+    color: #4a9eff;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.timeline-paragraph a:hover {
+    color: #82bfff;
+}
+
+/* The Animation Effect */
+/* Initially, hide the X and show the solid dot */
+.dot-x { 
+    opacity: 0; 
+    color: #000000 !important; /* Forces the 'X' to be black */
+    font-weight: bold;
+}
+.dot-only { opacity: 1; }
+/* On hover, the black X fades in on top of the red dot */
+.close-button:hover .dot-x { opacity: 1; }
+
+/* --- LIVE DASHBOARD SECTION --- */
+.dashboard-section {
+    max-width: 900px;
+    margin: 80px auto;
+    padding: 30px;
+    background: #FFFFFF;
+    border: 1px solid #e1e1e1;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+/* Header & Blinking Dot */
+.dashboard-header {
+    margin-bottom: 30px;
+}
+.live-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+.blinking-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #00B074; /* Clean Notion-green indicator */
+    border-radius: 50%;
+    display: inline-block;
+    animation: pulse 2s infinite;
+}
+.live-text {
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: #878682;
+    letter-spacing: 0.05em;
+}
+.dashboard-title {
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #37352f;
+    margin: 0;
+}
+
+/* The Horizontal Alignment Row */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Divides into 5 perfectly even column slots */
+    gap: 20px;
+}
+
+.project-card {
+    display: flex;
+    flex-direction: column;
+}
+.project-name {
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #37352f;
+    margin: 0 0 10px 0;
+}
+
+/* Custom Minimalist Notion Progress Circles */
+.project-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers everything for the circular look */
+    text-align: center;
+}
+
+.project-name {
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #37352f;
+    margin: 0 0 15px 0;
+    height: 32px; /* Keeps all titles identical in height even if one wraps to two lines */
+}
+
+/* The Box holding the circle and text */
+.circular-progress-container {
+    position: relative;
+    width: 75px;  /* Size of the circle */
+    height: 75px;
+    margin-bottom: 15px;
+}
+
+/* The SVG shape */
+.circular-chart {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* Gray empty track */
+.circle-bg {
+    fill: none;
+    stroke: #eee;
+    stroke-width: 2.5;
+}
+
+/* The Black fill */
+.circle-fill {
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    animation: circleReveal 1s ease-out forwards;
+}
+
+/* The exact center percentage text */
+.percentage-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Optional: The load-in animation for the black ring */
+@keyframes circleReveal {
+    from { stroke-dasharray: 0, 100; }
+}
+
+/* Underneath Recent Activity Updates */
+.project-update {
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 11px;
+    color: #878682;
+    line-height: 1.4;
+    margin: 0;
+}
+
+/* Blinking Keyframe Animation */
+@keyframes pulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 176, 116, 0.4); }
+    70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(0, 176, 116, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 176, 116, 0); }
+}
+
+/* Adaptive Breakpoint if looking on a phone screen */
+@media (max-width: 768px) {
+    .projects-grid { grid-template-columns: 1fr; gap: 30px; }
+}
+
+/* Footer styles */
+.site-footer {
+    width: 100%;
+    padding: 40px 0;
+    text-align: center;
+    background-color: #F9F8F7; /* Matches your navbar color */
+    border-top: 1px solid #e1e1e1;
+    margin-top: 100px; /* Gives separation space below the final timeline entry */
+}
+
+.site-footer p {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    color: #878682; /* Subtle dark gray for secondary text */
+    margin: 0;
+}

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Article View</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+      color: #1d1d1f;
+      font-family: 'Playfair Display', Georgia, serif;
+      line-height: 1.6;
+    }
+ 
+    /* Hero Block Component */
+    .hero-block {
+      width: 100%;
+      height: 75vh;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      background-size: cover;
+      background-position: center;
+    }
+ 
+    .hero-overlay {
+      padding: 60px 10%;
+      background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+      width: 100%;
+      color: white;
+    }
+ 
+    .hero-overlay h1 { font-size: 3rem; margin: 0 0 12px 0; max-width: 900px;text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);}
+    .hero-overlay p { font-size: 1.5rem; opacity: 0.9; margin: 0 0 8px 0;text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);}
+    .hero-meta { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.7; font-family: -apple-system, BlinkMacSystemFont, sans-serif;text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);}
+ 
+    /* Structural Reusable Layout Blocks */
+    .block-container {
+      max-width: 700px; /* Ultra comfortable reading width */
+      margin: 40px auto;
+      padding: 0 24px;
+    }
+ 
+    p.paragraph-block {
+      font-size: 1.25rem;
+      color: #333336;
+      margin-bottom: 28px;
+    }
+ 
+    /* Giant Central Typography Quote Block */
+    .quote-block {
+      max-width: 900px;
+      margin: 60px auto;
+      text-align: center;
+      padding: 0 40px;
+    }
+    .quote-block blockquote {
+      font-size: 1.25rem;
+      font-style: italic;
+      border: none;
+      margin: 0;
+    }
+    .quote-divider {
+      width: 500px; height: 1px; background: #ccc; margin: 20px auto;
+    }
+ 
+    /* Full-Bleed/Large Image Block Component */
+    .image-block-large {
+      max-width: 1100px;
+      margin: 60px auto;
+      padding: 0 24px;
+    }
+    .image-block-large img { width: 100%; border-radius: 12px; }
+    .caption { text-align: center; color: #6e6e73; font-size: 0.9rem; margin-top: 12px; }
+ 
+    /* Side-by-Side Image Block Container */
+    .side-by-side-block {
+      max-width: 1100px;
+      margin: 60px auto;
+      display: flex;
+      gap: 24px;
+      padding: 0 24px;
+    }
+    .sbs-item { flex: 1; }
+    .sbs-item img { width: 100%; border-radius: 12px; }
+ 
+    /* Highlighted Reflection Block Component */
+    .reflection-block {
+      background: #f5f5f7;
+      border-left: 4px solid #0071e3;
+      padding: 32px;
+      border-radius: 0 16px 16px 0;
+      margin: 50px 0;
+    }
+    .reflection-block h4 { margin: 0 0 12px 0; font-size: 1.3rem; color: #0071e3; }
+ 
+    .callout-quote-block {
+        margin: 24px 0;
+        padding: 20px 22px 20px 0;  /* top | right | bottom | left */
+        position: relative;
+        border-left: 3px solid #1a1a1a;
+        background: transparent;
+        box-sizing: border-box;
+    }
+
+    .callout-quote-text {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-size: 1.25rem;     /* match .paragraph-block directly */
+      line-height: 1.6;
+      color: #1d1d1f;
+      margin: 0 0 0 16px;
+      text-align: left;
+    }
+
+    /* Background Color Canvas Tint Block */
+    .callout-quote-block::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;                  /* Starts flush underneath the left border line */
+        right: 0;                 /* Stretches all the way to the paragraph right margin edge */
+        background-color: #F9F8F7; /* Your signature art gallery navbar tone */
+        z-index: -1;
+        border-radius: 0 4px 4px 0;
+        opacity: 0.7;             
+    }
+ 
+    /* Container Callout Block */
+    .container-callout-block {
+        background-color: #F9F8F7;      /* Match your soft navbar/timeline card background tint */
+        border: 1px solid #e1e0dc;      /* Crisp, ultra-subtle framing border */
+        border-radius: 8px;             /* Clean rounded corners */
+        padding: 28px 32px;             /* Breathable padding on the inside */
+        margin: 28px 0;                 /* Vertical separation from paragraphs */
+        box-sizing: border-box;
+    }
+ 
+    .container-callout-text {
+        margin: 0;
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 1.1rem;
+        font-style: italic;             /* Keeps the text italicized */
+        line-height: 1.6;
+        color: #3a3a3c;                 /* Balanced, easy-to-read slate tone */
+    }
+ 
+    /* Text-Width Divider Block */
+    .text-divider-block {
+        padding: 32px 0;                /* Spacing around the divider line */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+ 
+    .text-divider-line {
+        width: 100%;                    /* Spans exactly the width of your paragraph text stream */
+        height: 1px;
+        background-color: #e1e0dc;      /* Clean line matching the layout borders */
+    }
+ 
+    /* This forces the browser to read '\n' as a true line break, exactly like a text editor */
+    .paragraph-block, 
+    .container-callout-text,
+    .callout-quote-text {
+      white-space: pre-line;
+    }
+ 
+    /* Top Return Link Styles */
+    /* Bottom Gallery Footer */
+    .article-end-footer {
+        margin: 100px 0 0 0;
+        padding: 60px 10%;
+        background-color: #F9F8F7;
+        border-top: 1px solid #e1e0dc;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+ 
+    .footer-eyebrow {
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #86868b;
+    }
+ 
+    .footer-return-link {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 2rem;
+        font-weight: 400;
+        color: #1d1d1f;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 16px;
+        line-height: 1;
+        transition: gap 0.3s ease;
+    }
+ 
+    .footer-return-link:hover {
+        gap: 24px;
+    }
+ 
+    .footer-return-link .footer-arrow {
+        font-size: 1.6rem;
+        transition: transform 0.3s ease;
+        display: inline-block;
+    }
+ 
+    .footer-return-link:hover .footer-arrow {
+        transform: translateX(-6px);
+    }
+ 
+    .footer-copyright {
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        font-size: 12px;
+        color: #b0b0b0;
+        margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+ 
+  <div id="articleCanvas"></div>
+ 
+<script>
+    function safelyFormat(text) {
+        // 1. Strip out dangerous HTML characters first for total security
+        const safeText = text
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+ 
+        // 2. Convert **text** to <b>text</b> (Bold)
+        let formattedText = safeText.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+ 
+        // 3. Convert *text* to <i>text</i> (Italics)
+        formattedText = formattedText.replace(/\*(.*?)\*/g, '<i>$1</i>');
+ 
+        return formattedText;
+    }
+    async function loadArticle() {
+      const canvas = document.getElementById('articleCanvas');
+      
+      // 1. Extract the unique slug from the URL parameters (e.g., "15-yuan")
+      const urlParams = new URLSearchParams(window.location.search);
+      const slug = urlParams.get('slug');
+ 
+      if (!slug) {
+        canvas.innerHTML = `<div class="block-container"><p>No article specified.</p></div>`;
+        return;
+      }
+ 
+      try {
+        // 2. Fetch the specific standalone content JSON file dynamically
+        const response = await fetch(`articles/${slug}.json`);
+        if (!response.ok) throw new Error("Article file not found");
+        const data = await response.json();
+ 
+        // Update the main page tab title browser bar
+        document.title = `${data.title} – thehappinessconversation`;
+ 
+        // 3. Build the page: hero, then back link inside the content container
+        let HTML = `
+          <div class="hero-block" style="background-image: url('${data.coverImage || data.heroImage || ''}');">
+            <div class="hero-overlay">
+              <div class="hero-meta">${data.tag} • ${data.readTime || data.readingTime} min read</div>
+              <h1>${data.title}</h1>
+              <p>${data.subtitle}</p>
+            </div>
+          </div>
+          <div class="block-container">
+        `;
+ 
+        // 4. Map individual layout structural content blocks elegantly
+        data.blocks.forEach(block => {
+          if (block.type === 'paragraph') {
+            // Wrap block.content in our new safety function!
+            const safeHTML = safelyFormat(block.content);
+            HTML += `<p class="paragraph-block">${safeHTML}</p>`;
+          } 
+          else if (block.type === 'quote') {
+            HTML += `
+              </div>
+              <div class="quote-block">
+                <div class="quote-divider"></div>
+                <blockquote class="center-quote">"${block.content}"</blockquote>
+                <div class="quote-divider"></div>
+              </div>
+              <div class="block-container">
+            `;
+          } 
+          else if (block.type === 'image') {
+            // Notice we removed the closing and reopening </div> lines!
+            HTML += `
+              <div class="image-block-inline" style="margin: 24px 0;">
+                <img src="${block.src}" alt="Content Visual" style="width: 100%; height: auto; border-radius: 4px;">
+                <div class="caption" style="margin-top: 8px; font-size: 0.9rem; color: #6e6e73;">${block.caption || ''}</div>
+              </div>
+            `;
+          }
+          else if (block.type === 'side-by-side-image') {
+            HTML += `
+              </div>
+              <div class="side-by-side-block">
+                <div class="sbs-item"><img src="${block.images[0].src}"><div class="caption">${block.images[0].caption || ''}</div></div>
+                <div class="sbs-item"><img src="${block.images[1].src}"><div class="caption">${block.images[1].caption || ''}</div></div>
+              </div>
+              <div class="block-container">
+            `;
+          } 
+          else if (block.type === 'reflection') {
+            HTML += `
+              <div class="reflection-block">
+                <h4>${block.title}</h4>
+                <p style="margin:0; font-size:1.15rem;">${block.content}</p>
+              </div>
+            `;
+          }
+          else if (block.type === 'callout-quote') {
+              HTML += `
+                  <div class="callout-quote-block">
+                      <blockquote class="callout-quote-text">${block.content}</blockquote>
+                  </div>
+              `;
+          }
+          else if (block.type === 'container-callout') {
+            HTML += `
+              <div class="container-callout-block">
+              <p class="container-callout-text">${block.content}</p>
+              </div>
+            `;
+          }
+          else if (block.type === 'text-divider') {
+            HTML += `
+              <div class="text-divider-block">
+                <div class="text-divider-line"></div>
+              </div>
+            `;
+          }
+        });
+        HTML += `
+          </div>
+          <footer class="article-end-footer">
+            <div class="footer-eyebrow">End of article</div>
+            <a href="articles.html" class="footer-return-link">
+              <span class="footer-arrow">←</span>
+              Back to the Gallery
+            </a>
+          </footer>
+        `;
+        HTML += `</div>`; // Close out containers cleanly
+        canvas.innerHTML = HTML;
+ 
+      } catch (err) {
+        console.error(err);
+        canvas.innerHTML = `
+          <div class="block-container" style="text-align: center; padding-top: 100px;">
+            <h2>Hanging this piece up soon...</h2>
+            <p style="color: #6e6e73;">Could not locate data for <code>articles/${slug}.json</code>. Make sure the file exists inside your folder layout.</p>
+            <br>
+            <a href="articles.html" style="color: #0071e3; text-decoration: none;">← Back to Gallery Grid</a>
+          </div>
+        `;
+      }
+    }
+ 
+    window.onload = loadArticle;
+  </script>
+</body>
+</html>

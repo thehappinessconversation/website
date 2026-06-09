@@ -1,0 +1,139 @@
+{
+  "_GRID_CHEATSHEET": {
+    "how_it_works": "12 columns, rows of 36px each. Cards are placed like paintings on a wall — you pick where each one goes.",
+    "gridCol": "start / end  (e.g. '1 / 8' means from column 1 to column 8, so 7 columns wide)",
+    "gridRow": "start / end  (e.g. '2 / 16' means from row 2 to row 16, so 14 rows tall = ~504px)",
+    "column_guide": "| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13(end) |",
+    "sizing_guide": {
+      "hero_card": "7–8 cols wide, 13–15 rows tall",
+      "large_card": "4–5 cols wide, 12–14 rows tall",
+      "medium_card": "4–5 cols wide,  9–11 rows tall",
+      "small_card": "3–4 cols wide,  8–10 rows tall"
+    },
+    "spacing_tip": "Leave at least 2 empty rows between cards that share column ranges. Overlap row ranges freely if columns don't overlap — that's what makes it feel like a real gallery wall.",
+    "adding_new_article": "1. Pick a gridCol range. 2. Pick a gridRow that doesn't collide with nearby cards in the same columns. 3. Add the JSON entry. Done."
+  },
+  "articles": [
+    {
+      "slug": "15-yuan",
+      "title": "15 Yuan",
+      "subtitle": "The worst mindset you can have as a seller",
+      "tag": "Happiness Journal Entries #1",
+      "date": "March 1, 2026",
+      "readTime": 3,
+      "coverImage": "./article-gallery-images/article1.png",
+      "gridCol": "1 / 8",
+      "gridRow": "1 / 13"
+    },
+    {
+      "slug": "costco-lavender",
+      "title": "My $14.99 Costco Lavender",
+      "subtitle": "Planting meaning and watching it grow",
+      "tag": "Reflections #1",
+      "date": "March 8, 2026",
+      "readTime": 5,
+      "coverImage": "./article-gallery-images/article2.jpg",
+      "gridCol": "8 / 13",
+      "gridRow": "1 / 18"
+    },
+    {
+      "slug": "paper-stars",
+      "title": "Her Paper Stars",
+      "subtitle": "The perfect gift",
+      "tag": "Happiness Journal Entries #2",
+      "date": "March 16, 2026",
+      "readTime": 3,
+      "coverImage": "./article-gallery-images/article3.png",
+      "gridCol": "5 / 8",
+      "gridRow": "13 / 18"
+    },
+    {
+      "slug": "what-do-you-want-to-be",
+      "title": "What do you want to be when you grow up?",
+      "subtitle": "An alternative to this question",
+      "tag": "Reflections #2",
+      "date": "March 22, 2026",
+      "readTime": 5,
+      "coverImage": "./article-gallery-images/article4.png",
+      "gridCol": "1 / 5",
+      "gridRow": "13 / 25"
+    },
+    {
+      "slug": "passions-and-grief",
+      "title": "passions and the 5 stages of grief",
+      "subtitle": "minus the acceptance",
+      "tag": "A Collection of Thoughts #1",
+      "date": "March 29, 2026",
+      "readTime": 4,
+      "coverImage": "./article-gallery-images/article5.png",
+      "gridCol": "1 / 7",
+      "gridRow": "25 / 30"
+    },
+    {
+      "slug": "praying-for-geese",
+      "title": "the night i prayed for geese",
+      "subtitle": "at a sunday easter service",
+      "tag": "A Collection of Thoughts #2",
+      "date": "April 6, 2026",
+      "readTime": 4,
+      "coverImage": "./article-gallery-images/article6.png",
+      "gridCol": "5 / 13",
+      "gridRow": "18 / 25"
+    },
+    {
+      "slug": "dead-fish",
+      "title": "Dead Fish",
+      "subtitle": "Emphasizing the laugh",
+      "tag": "Happiness Journal Entries #3",
+      "date": "April 12, 2026",
+      "readTime": 3,
+      "coverImage": "./article-gallery-images/article7.png",
+      "gridCol": "7 / 13",
+      "gridRow": "25 / 34"
+    },
+    {
+      "slug": "better-conversations",
+      "title": "how to have better conversations",
+      "subtitle": "that actually lead somewhere",
+      "tag": "A Collection of Thoughts #3",
+      "date": "April 20, 2026",
+      "readTime": 5,
+      "coverImage": "./article-gallery-images/article8.png",
+      "gridCol": "4 / 7",
+      "gridRow": "30 / 34"
+    },
+    {
+      "slug": "magic-school-bus",
+      "title": "Ms. Bron's Magic School Bus",
+      "subtitle": "Without seatbelts",
+      "tag": "Reflections #3",
+      "date": "April 27, 2026",
+      "readTime": 4,
+      "coverImage": "./article-gallery-images/article9.png",
+      "gridCol": "8 / 13",
+      "gridRow": "34 / 40"
+    },
+    {
+      "slug": "window",
+      "title": "window",
+      "subtitle": "...",
+      "tag": "A Collection of Thoughts #4",
+      "date": "May 3, 2026",
+      "readTime": 4,
+      "coverImage": "./article-gallery-images/article10.png",
+      "gridCol": "1 / 4",
+      "gridRow": "30 / 43"
+    },
+    {
+      "slug": "trevor-noah",
+      "title": "How Trevor Noah Explained Happiness Better Than Most Self-Help Books",
+      "subtitle": "Learning to find joy in the trenches",
+      "tag": "Irrational Motivation #1",
+      "date": "May 24, 2026",
+      "readTime": 8,
+      "coverImage": "./article-gallery-images/article11.png",
+      "gridCol": "4 / 8",
+      "gridRow": "34 / 43"
+    }
+  ]
+}

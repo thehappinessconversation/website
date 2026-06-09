@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Articles – thehappinessconversation</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        .gallery-main {
+            padding: 60px 48px 160px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+ 
+        .gallery-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 60px;
+        }
+ 
+        .gallery-heading {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 42px;
+            font-weight: 400;
+            color: #1a1a1a;
+            margin: 0;
+            line-height: 1;
+        }
+ 
+        .gallery-count {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 13px;
+            color: #878682;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding-bottom: 6px;
+        }
+ 
+        /*
+         * 12-column grid, rows of 36px.
+         * Each card's position comes directly from gridCol / gridRow in article-gallery.json.
+         * No classes to manage — just numbers in the JSON.
+         */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-auto-rows: 36px;
+            column-gap: 16px;
+            row-gap: 16px;
+        }
+ 
+        /* ── Card base ── */
+        .card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            transition: transform 0.32s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        box-shadow 0.32s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+ 
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.16);
+            z-index: 10;
+        }
+ 
+        .card:hover .card-cover-img    { transform: scale(1.05); }
+        .card:hover .card-hover-overlay { opacity: 1; }
+        .card:hover .card-preview       { opacity: 1; transform: translateY(0); }
+        .card:hover .card-default-meta  { opacity: 0; }
+ 
+        /* ── Gradient scrim — deep enough that white text reads on any photo ── */
+        .card-scrim {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to top,
+                rgba(0,0,0,0.82) 0%,
+                rgba(0,0,0,0.25) 45%,
+                rgba(0,0,0,0.05) 100%
+            );
+            z-index: 1;
+        }
+ 
+        /* ── Cover image ── */
+        .card-cover-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+ 
+        /* ── Default state: title only, everything else hidden ── */
+        .card-default-meta {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            padding: 1rem 1.3rem 1.1rem;
+            z-index: 2;
+            transition: opacity 0.22s ease;
+        }
+ 
+        .card-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            color: #fff;
+            font-weight: 400;
+            line-height: 1.25;
+            margin: 0;
+            /* font-size set dynamically by JS based on card height */
+        }
+ 
+        /* ── Hover overlay ── */
+        .card-hover-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.38);
+            opacity: 0;
+            transition: opacity 0.26s ease;
+            z-index: 3;
+        }
+ 
+        /* ── Hover preview slides up ── */
+        .card-preview {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            padding: 1.4rem 1.3rem 1.2rem;
+            z-index: 4;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.28s ease 0.04s, transform 0.28s ease 0.04s;
+        }
+ 
+        .card-preview-tag {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 6px;
+        }
+ 
+        .card-preview-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            color: #fff;
+            font-weight: 400;
+            line-height: 1.28;
+            margin: 0 0 8px 0;
+        }
+ 
+        .card-preview-sub {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 12px;
+            color: rgba(255,255,255,0.62);
+            line-height: 1.45;
+            margin-bottom: 10px;
+        }
+ 
+        .card-preview-read {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 11px;
+            color: rgba(255,255,255,0.38);
+        }
+ 
+        /* ── Mobile: drop the grid, stack vertically ── */
+        @media (max-width: 900px) {
+            .gallery-main { padding: 40px 20px 80px; }
+            .gallery-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 48px;
+            }
+            .card { height: 280px; border-radius: 12px; }
+            .card-title { font-size: 18px !important; }
+            .card-preview-title { font-size: 18px !important; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="index.html"><span>🏠</span> Home</a>
+            <a href="articles.html"><span>📝</span> Articles</a>
+            <a href="archives.html"><span>🗃️</span> Archives</a>
+        </div>
+        <div class="nav-right">
+            <a href="https://www.instagram.com/thehappinessconversation/" target="_blank"><i class="bi bi-instagram"></i></a>
+            <a href="https://substack.com/@thehappinessconversation" target="_blank"><i class="bi bi-substack"></i></a>
+            <a href="https://www.youtube.com/@warren7182" target="_blank"><i class="bi bi-youtube"></i></a>
+        </div>
+    </nav>
+ 
+    <main class="gallery-main">
+        <div class="gallery-header">
+            <h1 class="gallery-heading">Articles</h1>
+            <span class="gallery-count" id="article-count"></span>
+        </div>
+        <div class="gallery-grid" id="gallery-grid"></div>
+    </main>
+ 
+    <footer class="site-footer">
+        <p>&copy; 2026 The Happiness Conversation. All rights reserved.</p>
+    </footer>
+ 
+    <script>
+        // Title font size scales with card area so big cards get big text
+        function titleSize(area) {
+            if (area >= 80) return '26px';
+            if (area >= 50) return '22px';
+            if (area >= 30) return '18px';
+            return '14px';
+        }
+ 
+        function buildCard(article) {
+            // Parse row span from gridRow string e.g. "1 / 16" → span of 15
+            const [rowStart, rowEnd] = article.gridRow
+                .split('/')
+                .map(s => parseInt(s.trim()));
+
+            const [colStart, colEnd] = article.gridCol
+                .split('/')
+                .map(s => parseInt(s.trim()));
+
+            const rowSpan = rowEnd - rowStart;
+            const colSpan = colEnd - colStart;
+
+            const area = rowSpan * colSpan;
+            const fontSize = titleSize(area);
+ 
+            const card = document.createElement('a');
+            card.className = 'card';
+            card.href = `article-page.html?slug=${article.slug}`;
+ 
+            // Position comes entirely from the JSON — no CSS classes needed
+            card.style.gridColumn = article.gridCol;
+            card.style.gridRow    = article.gridRow;
+ 
+            const bg = `<img class="card-cover-img" src="${article.coverImage}" alt="${article.title}">`;
+ 
+            card.innerHTML = `
+                ${bg}
+                <div class="card-scrim"></div>
+ 
+                <div class="card-default-meta">
+                    <p class="card-title" style="font-size:${fontSize}">${article.title}</p>
+                </div>
+ 
+                <div class="card-hover-overlay"></div>
+ 
+                <div class="card-preview">
+                    <div class="card-preview-tag">${article.tag}</div>
+                    <p class="card-preview-title" style="font-size:${fontSize}">${article.title}</p>
+                    <p class="card-preview-sub">${article.subtitle}</p>
+                    <div class="card-preview-read">${article.readTime} min read · ${article.date}</div>
+                </div>
+            `;
+ 
+            return card;
+        }
+ 
+        async function loadGallery() {
+            try {
+                const res = await fetch('article-gallery.json');
+                const data = await res.json();
+ 
+                // Support both {articles:[...]} shape and plain array
+                const articles = Array.isArray(data) ? data : data.articles;
+ 
+                const grid     = document.getElementById('gallery-grid');
+                const countEl  = document.getElementById('article-count');
+ 
+                countEl.textContent = `${articles.length} pieces`;
+                articles.forEach(article => grid.appendChild(buildCard(article)));
+ 
+            } catch (err) {
+                console.error('Failed to load articles:', err);
+            }
+        }
+ 
+        loadGallery();
+    </script>
+</body>
+</html>
